@@ -1,10 +1,10 @@
 package com.bookit.utilities;
 
 import io.restassured.response.Response;
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.*;
 
 public class APIUtilities {
-    private static String URI = ConfigurationReader.getProperty("bookit.api.qa1");
+    private static String URI = Environment.BASE_URI;
 
     /**
      * Method that generates access token
@@ -12,8 +12,8 @@ public class APIUtilities {
      */
     public static String getToken(){
         Response response = given().
-                queryParam("email", ConfigurationReader.getProperty("team.leader.email")).
-                queryParam("password", ConfigurationReader.getProperty("team.leader.password")).
+                queryParam("email", Environment.LEADER_USERNAME).
+                queryParam("password", Environment.LEADER_PASSWORD).
                 when().
                 get("/sign").prettyPeek();
         return response.jsonPath().getString("accessToken");
@@ -28,14 +28,14 @@ public class APIUtilities {
         String userName = "";
         String password = "";
         if (role.toLowerCase().contains("lead")) {
-            userName = ConfigurationReader.getProperty("team.leader.email");
-            password = ConfigurationReader.getProperty("team.leader.password");
+            userName = Environment.LEADER_USERNAME;
+            password = Environment.LEADER_PASSWORD;
         } else if (role.toLowerCase().contains("teacher")) {
-            userName = ConfigurationReader.getProperty("teacher.email");
-            password = ConfigurationReader.getProperty("teacher.password");
+            userName = Environment.TEACHER_USERNAME;
+            password = Environment.TEACHER_PASSWORD;
         } else if (role.toLowerCase().contains("member")) {
-            userName = ConfigurationReader.getProperty("team.member.email");
-            password = ConfigurationReader.getProperty("team.member.password");
+            userName = Environment.MEMBER_USERNAME;
+            password = Environment.MEMBER_PASSWORD;
         } else {
             throw new RuntimeException("Invalid user type!");
         }
@@ -46,5 +46,7 @@ public class APIUtilities {
                 get("/sign").prettyPeek();
         return response.jsonPath().getString("accessToken");
     }
+
+
 
 }
