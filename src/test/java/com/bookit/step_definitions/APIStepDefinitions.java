@@ -106,4 +106,11 @@ public class APIStepDefinitions {
     public void user_verifies_that_payload_contains_message(String string) {
         response.then().assertThat().body("", contains(string));
     }
+
+    @Then("user deletes previously added students")
+    public void user_deletes_previously_added_students(List<Map<String, String>> students) {
+        for(Map<String, String> student: students){
+            response = APIUtilities.deleteMe(student.get("email"), student.get("password"));
+        }
+    }
 }

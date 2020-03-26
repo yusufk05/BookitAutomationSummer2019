@@ -1,6 +1,6 @@
 @api @create_student
   Feature: Create Student
-    Scenario: 1. Create student as a team member and verify status code is 422
+    Scenario: 1. Create student as a team member and verify status code is 403
       Given authorization token is provided for "team member"
       And user accepts content type as "application/json"
       When user sends POST request to "/api/students/student" with following information:
@@ -13,11 +13,11 @@
       And user accepts content type as "application/json"
       When user sends POST request to "/api/students/student" with following information:
         | first-name | last-name | email               | password | role                | campus-location | batch-number | team-name      |
-        | Johny      | SDET      | Johny1234@email.com | 1111     | student-team-member | VA              | 12           | Online_Hackers |
+        | Johny      | SDET      | Johny12345@email.com | 1111     | student-team-member | VA              | 12           | Online_Hackers |
       And user verifies that response status code is 201
-      Then user deletes previously added students
-        | first-name | last-name | email               | password | role                | campus-location | batch-number | team-name      |
-        | Johny      | SDET      | Johny1234@email.com | 1111     | student-team-member | VA              | 12           | Online_Hackers |
+    ##  Then user deletes previously added students
+    ##    | first-name | last-name | email               | password | role                | campus-location | batch-number | team-name      |
+    ##    | Johny      | SDET      | Johny12345@email.com | 1111     | student-team-member | VA              | 12           | Online_Hackers |
 
 #    we can add only one student
 #  so to resolve this issue, we can delete added student at the end of the test
